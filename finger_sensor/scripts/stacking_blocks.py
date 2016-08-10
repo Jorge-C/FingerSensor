@@ -29,7 +29,7 @@ class SmartBaxter(Baxter):
                                            self.update_sensor_values,
                                            queue_size=1)
         self.zero_sensor()
-        import ipdb;ipdb.set_trace()
+        #import ipdb;ipdb.set_trace()
 
     def update_sensor_values(self, msg):
         values = np.array(msg.data)
@@ -85,7 +85,7 @@ class SmartBaxter(Baxter):
         rospy.sleep(0.5)
         # We want to block end effector opening so that the next
         # movement happens with the gripper fully opened.
-        self.gripper.open(block=True)
+        self.gripper.open()
         while True:
             rospy.loginfo("Going down to pick (at {})".format(self.tip.max()))
             if self.tip.max() > 10000:
@@ -128,7 +128,7 @@ class SmartBaxter(Baxter):
         # self.move_ik(pose)
 
         rospy.sleep(0.5)
-        self.gripper.close(block=True)
+        self.gripper.close()
         rospy.sleep(0.5)
         self.move_ik(pregrasp_pose)
 
@@ -226,7 +226,7 @@ class SmartBaxter(Baxter):
         rospy.sleep(0.5)
         #self.move_ik(pose)
         #rospy.sleep(0.5)
-        self.gripper.open(block=True)
+        self.gripper.open()
         rospy.sleep(0.5)
         self.move_ik(preplace_pose)
 
@@ -278,10 +278,10 @@ if __name__ == '__main__':
         p = Placement()
         # p.run_manual()
         p.run_auto()
-    1/0
     smart = True
+    #1/0
     if smart:
-        n = PickAndPlaceNode(SmartBaxter('left'))
+        n = PickAndPlaceNode(SmartBaxter, 'left')
     else:
         n = PickAndPlaceNode(Jaco)
         # n = PickAndPlaceNode(Baxter('left'))
